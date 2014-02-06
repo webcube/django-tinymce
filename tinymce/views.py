@@ -26,7 +26,7 @@ def mceproxy(request, path=""):
     #if path[-3:] != 'htm':
     #    return HttpResponseNotFound("Can't find that page")
     if path not in cached_mce:
-        url_prefix = settings.STATIC_URL + JS_ROOT
+        url_prefix = (settings.STATIC_URL + JS_ROOT).replace("static//static", 'static')
         if not url_prefix.startswith("http"):
             if request.is_secure():
                 url_prefix = "https://"+getattr(settings,"DOMAIN_NAME","")+url_prefix
