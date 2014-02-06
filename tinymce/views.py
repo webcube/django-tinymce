@@ -3,12 +3,15 @@
 
 import logging
 from django.core import urlresolvers
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render_to_response
 from django.template import RequestContext, loader
 from django.utils.translation import ugettext as _
 from tinymce.compressor import gzip_compressor
 from tinymce.widgets import get_language_config
+from tinymce.settings import JS_ROOT
+from django.conf import settings
+import requests
 try:
     import json
 except ImportError:
@@ -17,6 +20,28 @@ try:
     from django.views.decorators.csrf import csrf_exempt
 except ImportError:
     pass
+
+cached_mce = { } 
+def mceproxy(request, path=""):
+    #if path[-3:] != 'htm':
+    #    return HttpResponseNotFound("Can't find that page")
+    if path not in cached_mce:
+        url_prefix = settings.STATIC_ROOT + JS_ROOT
+        if not url_prefix.startswith("http"):
+            if request.is_secure():
+                url_prefix = "https://"+getattr(settings,"DOMAIN_NAME","")+url_prefix
+            else:
+                url_prefix = "http://"+getattr(settings,"DOMAIN_NAME","")+url_prefix
+        url = url_prefix + path
+        r = requests.get(url)
+        if r.status_code != 200:
+            return HttpResponseNotFound("Couldn't Find That Page")
+        hr = HttpResponse(r.content)
+        for k,v in r.headers.iteritems():
+            hr[k] = v
+        cached_mce[path] = hr
+    return cached_mce[path]
+
 
 def textareas_js(request, name, lang=None):
     """

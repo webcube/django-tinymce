@@ -10909,6 +10909,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 	};
 
 	// Global script loader
+
 	tinymce.ScriptLoader = new tinymce.dom.ScriptLoader();
 })(tinymce);
 
@@ -13397,6 +13398,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				base_uri : tinyMCE.baseURI
 			});
 
+            self.internalLinkURI = settings['internal_link_url'];
+
 			self.baseURI = tinymce.baseURI;
 
 			self.contentCSS = [];
@@ -13553,9 +13556,11 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					s.theme = s.theme.replace(/-/, '');
 					o = ThemeManager.get(s.theme);
 					t.theme = new o();
-
+                    var internal_url = ThemeManager.urls[s.theme].replace(/(.*)(themes.*)/,"\$2");
+                    internal_url = t.settings.internal_link_url + internal_url 
 					if (t.theme.init)
-						t.theme.init(t, ThemeManager.urls[s.theme] || tinymce.documentBaseURL.replace(/\/$/, ''));
+						t.theme.init(t, ThemeManager.urls[s.theme] || tinymce.documentBaseURL.replace(/\/$/, ''), internal_url);
+						//t.theme.init(t, ThemeManager.urls[s.theme] || tinymce.documentBaseURL.replace(/\/$/, ''));
 				} else {
 					t.theme = s.theme;
 				}

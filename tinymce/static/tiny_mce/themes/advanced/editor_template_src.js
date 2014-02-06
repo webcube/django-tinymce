@@ -148,10 +148,11 @@
 
 		stateControls : ['bold', 'italic', 'underline', 'strikethrough', 'bullist', 'numlist', 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'sub', 'sup', 'blockquote'],
 
-		init : function(ed, url) {
+		init : function(ed, url, internal_url) {
 			var t = this, s, v, o;
 
 			t.editor = ed;
+            t.internal_url = internal_url;
 			t.url = url;
 			t.onResolveName = new tinymce.util.Dispatcher(this);
 			s = ed.settings;
@@ -1336,9 +1337,8 @@
 
 		_mceInsertAnchor : function(ui, v) {
 			var ed = this.editor;
-
 			ed.windowManager.open({
-				url : this.url + '/anchor.htm',
+				url : this.internal_url + '/anchor.htm',
 				width : 320 + parseInt(ed.getLang('advanced.anchor_delta_width', 0)),
 				height : 90 + parseInt(ed.getLang('advanced.anchor_delta_height', 0)),
 				inline : true
@@ -1351,7 +1351,7 @@
 			var ed = this.editor;
 
 			ed.windowManager.open({
-				url : this.url + '/charmap.htm',
+				url : this.internal_url + '/charmap.htm',
 				width : 550 + parseInt(ed.getLang('advanced.charmap_delta_width', 0)),
 				height : 265 + parseInt(ed.getLang('advanced.charmap_delta_height', 0)),
 				inline : true
@@ -1364,7 +1364,7 @@
 			var ed = this.editor;
 
 			ed.windowManager.open({
-				url : this.url + '/about.htm',
+				url : this.internal_url + '/about.htm',
 				width : 480,
 				height : 380,
 				inline : true
@@ -1376,7 +1376,7 @@
 		_mceShortcuts : function() {
 			var ed = this.editor;
 			ed.windowManager.open({
-				url: this.url + '/shortcuts.htm',
+				url: this.internal_url + '/shortcuts.htm',
 				width: 480,
 				height: 380,
 				inline: true
@@ -1391,7 +1391,7 @@
 			v = v || {};
 
 			ed.windowManager.open({
-				url : this.url + '/color_picker.htm',
+				url : this.internal_url + '/color_picker.htm',
 				width : 375 + parseInt(ed.getLang('advanced.colorpicker_delta_width', 0)),
 				height : 250 + parseInt(ed.getLang('advanced.colorpicker_delta_height', 0)),
 				close_previous : false,
@@ -1407,7 +1407,7 @@
 			var ed = this.editor;
 
 			ed.windowManager.open({
-				url : this.url + '/source_editor.htm',
+				url : this.internal_url + '/source_editor.htm',
 				width : parseInt(ed.getParam("theme_advanced_source_editor_width", 720)),
 				height : parseInt(ed.getParam("theme_advanced_source_editor_height", 580)),
 				inline : true,
@@ -1426,7 +1426,7 @@
 				return;
 
 			ed.windowManager.open({
-				url : this.url + '/image.htm',
+				url : this.internal_url + '/image.htm',
 				width : 355 + parseInt(ed.getLang('advanced.image_delta_width', 0)),
 				height : 275 + parseInt(ed.getLang('advanced.image_delta_height', 0)),
 				inline : true
@@ -1439,7 +1439,7 @@
 			var ed = this.editor;
 
 			ed.windowManager.open({
-				url : this.url + '/link.htm',
+				url : this.internal_url + '/link.htm',
 				width : 310 + parseInt(ed.getLang('advanced.link_delta_width', 0)),
 				height : 200 + parseInt(ed.getLang('advanced.link_delta_height', 0)),
 				inline : true
