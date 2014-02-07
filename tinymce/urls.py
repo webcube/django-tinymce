@@ -14,5 +14,5 @@ urlpatterns = patterns('tinymce.views',
     url(r'^compressor/$', 'compressor', name='tinymce-compressor'),
     url(r'^filebrowser/$', 'filebrowser', name='tinymce-filebrowser'),
     url(r'^preview/(?P<name>.+)/$', 'preview', name='tinymce-preview'),
-    url(r'^path/(?P<path>.*)$', 'mceproxy', name='tinymce-proxy'),
+    url(r'^admin/path/(?P<path>.*)$', 'mceproxy', name='tinymce-proxy'),
 )
