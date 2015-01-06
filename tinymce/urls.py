@@ -3,7 +3,7 @@
 
 try:
     from django.conf.urls import url, patterns
-except:
+except ImportError:
     from django.conf.urls.defaults import url, patterns
 
 urlpatterns = patterns('tinymce.views',
