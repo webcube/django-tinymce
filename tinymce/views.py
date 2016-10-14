@@ -38,6 +38,7 @@ def mceproxy(request, path=""):
             return HttpResponseNotFound("Couldn't Find That Page")
         hr = HttpResponse(r.content)
         for k,v in r.headers.iteritems():
+            if "Varnish" in k: continue 
             hr[k] = v
         cached_mce[path] = hr
     return cached_mce[path]
